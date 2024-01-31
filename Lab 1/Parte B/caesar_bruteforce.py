@@ -23,7 +23,7 @@ def caesar_bruteforce(cipher, k):
     for key in range(len(alphabet)):
         result = desencriptar_caesar(ciphertext, key)
         metric = calc_metrics(result)
-        results.append((metric, result))
+        results.append((metric, result, key))
 
     results.sort(key=lambda x: x[0])
 
@@ -82,7 +82,7 @@ def main():
     print("Mejores resultados:")
     counter = 1
     for result in results:
-        print(f"Resultado {counter}: {result[1]}")
+        print(f"Resultado {counter}, Llave {result[2]}: {result[1]}")
         print(f"Distancia euclidiana: {result[0]}")
         print('\n')
         counter += 1

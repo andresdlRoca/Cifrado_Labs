@@ -1,6 +1,8 @@
 import math
 import collections
 
+alphabet = "abcdefghijklmnñopqrstuvwxyz"
+
 def calc_metrics(texto):
     frecuencias_castellano = {
         'a': 0.125,
@@ -46,19 +48,47 @@ def calc_euclidian_distance(frecuencias_texto, frecuencias_castellano):
     return distance
 
 def afin_bruteforce(cipher, k):
-    return 0
+    results = []
+    m = len(alphabet)
+    for a in range(1,m):
+        if math.gcd(a, m) == 1:
+            for b in range(m):
+                result = desencriptar_afin(cipher, a, b)
+                metric = calc_metrics(result)
+                results.append((metric, result, [a, b]))
+    
+    results.sort(key=lambda x: x[0])
+
+    return results[:k]
+
+def desencriptar_afin(cipher, a, b):
+
+    m = len(alphabet)
+
+    a_inv = pow(a, -1, m)
+    texto_desencriptado = ""
+
+    for letra in cipher:
+        if letra in alphabet:
+            y = alphabet.index(letra)
+            x = a_inv * (y - b) % m
+            texto_desencriptado += alphabet[x]
+        else:
+            texto_desencriptado += letra
+
+    return texto_desencriptado
 
 def main():
     with open("cipher2.txt", "r") as file:
         cipher = file.read()
 
     ciphertext = cipher.lower()
-    results = afin_bruteforce(cipher, 5)
+    results = afin_bruteforce(ciphertext, 5)
 
     print("Mejores resultados:")
     counter = 1
     for result in results:
-        print(f"Resultado {counter}: {result[1]}")
+        print(f"Resultado {counter}, Llaves {result[2]}: {result[1]}")
         print(f"Distancia euclidiana: {result[0]}")
         print('\n')
         counter += 1

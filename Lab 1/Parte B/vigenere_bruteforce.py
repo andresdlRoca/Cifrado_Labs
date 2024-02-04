@@ -86,23 +86,6 @@ def descifrar_letra_vigenere(letra_cifrada, letra_clave, alfabeto):
     indice_letra_original = (indice_letra_cifrada - indice_letra_clave) % len(alfabeto)
     return alfabeto[indice_letra_original]
 
-def desencriptar_vigenere(cipher, key):
-    m = len(alphabet)
-
-    result = ""
-    clave_repetida = (key * (len(cipher) // len(key))) + key[:len(cipher) % len(key)]
-
-    for i in range(len(cipher)):
-        if cipher[i] in alphabet:
-            y = alphabet.index(cipher[i])
-            x = alphabet.index(clave_repetida[i])
-            result += alphabet[(y - x) % m]
-        else:
-            result += cipher[i]
-
-    return result
-
-
 def main():
     with open("cipher3.txt", "r") as file:
         cipher = file.read()

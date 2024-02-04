@@ -54,19 +54,23 @@ def vigenere_bruteforce(cipher, k):
     m = len(alphabet)
 
     key_length = 1
-    while key_length <= len(cipher):
+    while key_length <= 4: # Suponemos que la longitud de la clave es menor o igual a 4
         for key in generate_keys(key_length):
-            result = ""
-            clave_repetida = (key * (len(cipher) // key_length)) + key[:len(cipher) % key_length]
-            for i in range(len(cipher)):
-                if cipher[i] in alphabet:
-                    decrypted_letter = descifrar_letra_vigenere(cipher[i], clave_repetida[i], alphabet)
-                    result += decrypted_letter
-                else:
-                    result += cipher[i]
-            metric = calc_metrics(result)
-            results.append((metric, result, key))
-
+            if len(key) > 4:
+                break
+            else:
+                result = ""
+                clave_repetida = (key * (len(cipher) // key_length)) + key[:len(cipher) % key_length]
+                for i in range(len(cipher)): 
+                    if cipher[i] in alphabet:
+                        decrypted_letter = descifrar_letra_vigenere(cipher[i], clave_repetida[i], alphabet)
+                        result += decrypted_letter
+                    else:
+                        result += cipher[i]
+                metric = calc_metrics(result)
+                results.append((metric, result, key))
+                print(key)
+            
         key_length += 1
 
     results.sort(key=lambda x: x[0])
@@ -104,15 +108,14 @@ def main():
         cipher = file.read()
 
     ciphertext = cipher.lower()
-    ciphertext = textwrap.wrap(ciphertext, 50)
-    print(ciphertext[0])
-    results = vigenere_bruteforce(ciphertext[0], 5)
+    results = vigenere_bruteforce(ciphertext, 5)
 
     print("Mejores resultados:")
     counter = 1
     for result in results:
         print(f"Resultado {counter}: {result[1]}")
         print(f"Distancia euclidiana: {result[0]}")
+        print(f"Clave: {result[2]}")
         print('\n')
         counter += 1
 

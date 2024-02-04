@@ -3,17 +3,17 @@ import collections
 import itertools
 import textwrap
 
-alphabet = "abcdefghijklmnñopqrstuvwxyz"
+alphabet = "abcdefghijklmnopqrstuvwxyzáéíñóúü"
 
 def calc_metrics(texto):
     frecuencias_castellano = {
-        'a': 0.125,
+        'a': 0.115,
         'b': 0.022,
-        'c': 0.045,
-        'd': 0.058,
-        'e': 0.119,
-        'f': 0.017,
-        'g': 0.017,
+        'c': 0.040,
+        'd': 0.050,
+        'e': 0.122,
+        'f': 0.007,
+        'g': 0.018,
         'h': 0.007,
         'i': 0.062,
         'j': 0.005,
@@ -34,6 +34,13 @@ def calc_metrics(texto):
         'x': 0.001,
         'y': 0.009,
         'z': 0.005,
+        'á': 0.005,
+        'é': 0.004,
+        'í': 0.007,
+        'ó': 0.008,
+        'ú': 0.003,
+        'ü': 0.001
+        
     }
 
     frecuencias_texto = calc_frequency(texto)
@@ -56,6 +63,7 @@ def vigenere_bruteforce(cipher, k):
     key_length = 1
     while key_length <= 4: # Suponemos que la longitud de la clave es menor o igual a 4
         for key in generate_keys(key_length):
+            key = "be"+key
             if len(key) > 4:
                 break
             else:

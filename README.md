@@ -7,3 +7,5 @@
 ### [Laboratorio 2](./Lab%202/)
 [Parte A](./Lab%202/Parte%20A/)  
 [Parte B](./Lab%202/Parte%20B/)
+
+### [Laboratorio 3](./Lab%203/)
